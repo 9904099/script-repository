@@ -1,0 +1,15 @@
+gitlab:
+  image: '192.168.90.112:8089/gitlab/gitlab-ce:latest'
+  restart: always
+  hostname: 'gitlab_1'
+  environment:
+    GITLAB_OMNIBUS_CONFIG: |
+      external_url 'http://gitlab.example.com:8929' # http协议所使用的访问地址,不加端口默认80
+      gitlab_rails['gitlab_shell_ssh_port'] = 2224 # 此端口是run时22端口映射的2224端口
+  ports:
+    - '8929:8929'
+    - '2224:22'
+  volumes:
+    - '/home/gitlab/config:/etc/gitlab'
+    - '/home/gitlab/logs:/var/log/gitlab'
+    - '/home/gitlab/data:/var/opt/gitlab'
